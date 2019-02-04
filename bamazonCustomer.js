@@ -119,7 +119,7 @@ function checkout() {
         function (err, res) {
         }
     );
-    console.log("you purchased " + productQuantity + " " + productName + " for a total of " + productPrice * productQuantity);
+    console.log("you purchased " + productQuantity + " " + productName + " for a total of $" + productPrice * productQuantity);
     postCheckout();
 }
 
