@@ -1,12 +1,12 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-
+// Global Variables
 var productId;
 var productQuantity;
 var maxQuantity;
 var productName;
 var productPrice;
-
+// Connect to server
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -16,14 +16,13 @@ var connection = mysql.createConnection({
 });
 
 connect();
-
 function connect() {
     connection.connect(function (err) {
         if (err) throw err;
         storeDisplay();
     });
 }
-
+// Display Inventory
 function storeDisplay() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
@@ -36,7 +35,7 @@ function storeDisplay() {
         startPurchase();
     });
 }
-
+// Inquire item ID
 function startPurchase() {
     inquirer
         .prompt([
@@ -70,7 +69,7 @@ function startPurchase() {
             );
         });
 }
-
+// Inquire the amount to buy
 function quantity() {
     inquirer
         .prompt([
@@ -103,7 +102,7 @@ function quantity() {
             });
         });
 }
-
+// Complete Transaction and update table
 function checkout() {
     var updateStock = maxQuantity - productQuantity;
     connection.query(
@@ -122,7 +121,7 @@ function checkout() {
     console.log("you purchased " + productQuantity + " " + productName + " for a total of $" + productPrice * productQuantity);
     postCheckout();
 }
-
+// Prompt customer to leave store or keep shopping
 function postCheckout() {
     inquirer
         .prompt([

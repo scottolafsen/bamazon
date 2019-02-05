@@ -1,10 +1,10 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-
+// Global Variables
 var inventoryAmount;
 var productId;
 var currentInventory;
-
+// Connect to server
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -20,7 +20,7 @@ function connect() {
     });
     prompt();
 }
-
+// Inquire manager options
 function prompt() {
     inquirer
         .prompt([
@@ -55,7 +55,7 @@ function prompt() {
             }
         });
 }
-
+// Display Inventory
 function viewProducts() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
@@ -69,7 +69,7 @@ function viewProducts() {
     });
 
 }
-
+// Display low inventory
 function lowInventory() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
@@ -83,7 +83,7 @@ function lowInventory() {
     });
 
 }
-
+// Add inventory
 function addInventory() {
     inquirer
         .prompt([
@@ -130,6 +130,7 @@ function addInventory() {
             );
         });
 }
+// Finalize stock updating database
 function itemAdd() {
     connection.query(
         "UPDATE products SET ? WHERE ?",
@@ -147,6 +148,7 @@ function itemAdd() {
     );
     prompt();
 }
+// Add a new product to database
 function addProduct() {
     inquirer
         .prompt([
@@ -193,5 +195,4 @@ function addProduct() {
                 }
             );
         });
-
 }
